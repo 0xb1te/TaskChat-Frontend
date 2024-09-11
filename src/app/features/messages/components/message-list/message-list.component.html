@@ -1,0 +1,21 @@
+<!-- MESSAGES -->
+<div class="mt-2 mb-16 flex flex-col-reverse space-y-2">
+  <!-- Loop through the messageList using *ngFor -->
+  <div *ngFor="let message of filteredMessageList()" class="w-full">
+    <!-- Apply conditional styling using ngClass -->
+    <div
+      [ngClass]="{
+        'bg-blue-200 text-gray-900': message.user.username !== 'You',
+        'bg-blue-700 text-white ml-auto': message.user.username === 'You'
+      }"
+      class="w-3/4 mx-4 p-2 rounded-lg my-1 flex flex-col"
+    >
+      <!-- Display message content -->
+      <p class="font-semibold">{{ message.data }}</p>
+      <!-- Display formatted timestamp with blue color -->
+      <span class="text-xs font-semibold mt-1 self-end">
+        {{ message.timestampStr }}
+      </span>
+    </div>
+  </div>
+</div>
