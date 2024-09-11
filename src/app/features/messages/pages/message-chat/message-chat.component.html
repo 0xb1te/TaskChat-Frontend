@@ -1,0 +1,15 @@
+<div class="flex flex-col h-full">
+  <div class="sticky top-0">
+    <app-message-navbar></app-message-navbar>
+  </div>
+
+  <!-- Message List (Scrollable Area) -->
+  <div class="flex-grow overflow-y-auto no-scrollbar">
+    <app-message-list [messageList]="messages"></app-message-list>
+  </div>
+
+  <!-- Message Input (Sticky to Bottom) -->
+  <div class="sticky bottom-0">
+    <app-message-input></app-message-input>
+  </div>
+</div>
