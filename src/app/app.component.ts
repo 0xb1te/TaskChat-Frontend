@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { FooterBarComponent } from './shared/components/footer-bar/footer-bar.component';
 import { HeaderNavbarComponent } from './shared/components/header-navbar/header-navbar.component';
 import { Component, OnInit } from '@angular/core';
+import { initFlowbite } from 'flowbite';
+import { SideNavbarComponent } from './shared/components/side-navbar/side-navbar.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +14,7 @@ import { Component, OnInit } from '@angular/core';
     RouterOutlet,
     HeaderNavbarComponent,
     FooterBarComponent,
+    SideNavbarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -19,5 +22,7 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'TaskChat';
 
-  ngOnInit() {}
+  ngOnInit() {
+    initFlowbite();
+  }
 }

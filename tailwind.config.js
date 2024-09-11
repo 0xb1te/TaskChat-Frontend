@@ -1,12 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require("@spartan-ng/ui-core/hlm-tailwind-preset")],
-  content: [
-    join(__dirname, "src/**/!(*.stories|*.spec).{ts,html}"),
-    ...createGlobPatternsForDependencies(__dirname),
-  ],
+  content: ["./src/**/*.{html,ts}", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
