@@ -3,12 +3,14 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'landing',
+    redirectTo: 'messages',
     pathMatch: 'full',
   },
   {
-    path: 'landing',
+    path: 'messages',
     loadChildren: () =>
-      import('./features/landing/landing.routes').then((m) => m.LANDING_ROUTES),
+      import('./features/messages/messages.routes').then(
+        (m) => m.MESSAGES_ROUTES
+      ),
   },
 ];
