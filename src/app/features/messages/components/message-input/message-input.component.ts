@@ -39,7 +39,7 @@ export class MessageInputComponent {
       const actualDate: Date = new Date();
       const message: Message = {
         createdAt: actualDate,
-        author: this.authService.sessionUid,
+        author: this.authService.fullUsername,
         category: this.category(),
         content: this.messageForm.value.message,
         timestampStr: format(actualDate, 'MMM d, yyyy h:mm a'),

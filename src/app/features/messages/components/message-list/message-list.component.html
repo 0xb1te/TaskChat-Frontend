@@ -5,9 +5,10 @@
     <!-- Apply conditional styling using ngClass -->
     <div
       [ngClass]="{
-        'bg-blue-200 text-gray-900': message.author !== authService.sessionUid,
+        'bg-blue-200 text-gray-900':
+          message.author !== authService.fullUsername,
         'bg-blue-700 text-white ml-auto':
-          message.author === authService.sessionUid
+          message.author === authService.fullUsername
       }"
       class="w-3/4 mx-4 p-2 rounded-lg my-1 flex flex-col"
     >
