@@ -5,6 +5,9 @@ import { HeaderNavbarComponent } from './shared/components/header-navbar/header-
 import { Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { SideNavbarComponent } from './shared/components/side-navbar/side-navbar.component';
+import { HttpService } from './core/services/http.service';
+import { ApiPaths } from './core/constants/api-paths';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +25,16 @@ import { SideNavbarComponent } from './shared/components/side-navbar/side-navbar
 export class AppComponent implements OnInit {
   title = 'TaskChat';
 
+  constructor(
+    private httpService: HttpService,
+    private authService: AuthService
+  ) {}
+
   ngOnInit() {
     initFlowbite();
+    this.httpService.get(ApiPaths.SessionUid).subscribe({
+      next: (response: any) => (this.authService.sessionUid = response.uid),
+      error: (error) => console.error(error),
+    });
   }
 }

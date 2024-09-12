@@ -1,15 +1,26 @@
-<div class="flex flex-col h-full">
-  <div class="sticky top-0">
-    <app-message-navbar></app-message-navbar>
-  </div>
+<app-side-navbar
+  [sentMessage]="sentMessage"
+  (selectedCategory)="selectedCategory($event)"
+>
+  <div *ngIf="category; else elseBlock" class="flex flex-col h-full">
+    <div class="sticky top-0">
+      <app-message-navbar [category]="category"></app-message-navbar>
+    </div>
 
-  <!-- Message List (Scrollable Area) -->
-  <div class="flex-grow overflow-y-auto no-scrollbar">
-    <app-message-list [messageList]="messages"></app-message-list>
-  </div>
+    <!-- Message List (Scrollable Area) -->
+    <div class="flex-grow overflow-y-auto no-scrollbar">
+      <app-message-list [messageList]="messages"></app-message-list>
+    </div>
 
-  <!-- Message Input (Sticky to Bottom) -->
-  <div class="sticky bottom-0">
-    <app-message-input></app-message-input>
+    <!-- Message Input (Sticky to Bottom) -->
+    <div class="sticky bottom-0">
+      <app-message-input
+        [category]="category"
+        (sentMessage)="sendMessage($event)"
+      ></app-message-input>
+    </div>
   </div>
-</div>
+  <ng-template #elseBlock
+    ><app-no-active-chat></app-no-active-chat
+  ></ng-template>
+</app-side-navbar>

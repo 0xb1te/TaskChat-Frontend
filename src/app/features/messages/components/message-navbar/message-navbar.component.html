@@ -1,6 +1,6 @@
 <!-- HEADING -->
 <div
-  class="rounded-lg w-full bg-blue-900 h-16 pt-2 text-white flex justify-between shadow-md"
+  class="rounded-lg w-full bg-blue-900 h-16 text-white flex justify-between items-center shadow-md"
   style="top: 0px; overscroll-behavior: none"
 >
   <!-- back button -->
@@ -16,6 +16,12 @@
       />
     </svg>
   </a>
+
+  <!-- Title -->
+  <div class="text-lg font-semibold text-center mx-auto">
+    {{ category().name }}
+  </div>
+
   <!-- 3 dots -->
   <svg
     xmlns="http://www.w3.org/2000/svg"

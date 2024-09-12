@@ -1,19 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { Category } from '../../../../shared/components/side-navbar/side-navbar.component';
+import { Component, output } from '@angular/core';
+import {
+  Category,
+  SideNavbarComponent,
+} from '../../../../shared/components/side-navbar/side-navbar.component';
 import { MessageListComponent } from '../../components/message-list/message-list.component';
 import { MessageInputComponent } from '../../components/message-input/message-input.component';
 import { MessageNavbarComponent } from '../../components/message-navbar/message-navbar.component';
+import { HttpService } from '../../../../core/services/http.service';
+import { ApiPaths } from '../../../../core/constants/api-paths';
+import { NoActiveChatComponent } from '../no-active-chat/no-active-chat.component';
 
 export type User = {
   username: string;
 };
 
 export type Message = {
-  timestamp: Date;
+  createdAt: Date;
   timestampStr?: string;
-  user: User;
-  data: string;
+  author: string;
+  content: string;
+  category: Category;
 };
 
 @Component({
@@ -24,73 +31,44 @@ export type Message = {
     MessageListComponent,
     MessageInputComponent,
     MessageNavbarComponent,
+    SideNavbarComponent,
+    NoActiveChatComponent,
   ],
   templateUrl: './message-chat.component.html',
   styleUrl: './message-chat.component.scss',
 })
-export class MessageChatComponent implements OnInit {
-  #category: Category | undefined;
-  public messages: Message[] = [
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'Something',
-      },
-      data: 'Some message Content 3',
-    },
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'Something',
-      },
-      data: 'Some message Content 3',
-    },
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'Something',
-      },
-      data: 'Some message Content 1',
-    },
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'You',
-      },
-      data: 'Some message Content 2',
-    },
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'Something',
-      },
-      data: 'Some message Content 3',
-    },
-    {
-      timestamp: new Date(),
-      user: {
-        username: 'Something',
-      },
-      data: 'Some message Content 3',
-    },
-  ];
+export class MessageChatComponent {
+  public messages: Message[] = [];
+  public category!: Category;
+  public sentMessage?: Message;
 
-  @Input() set category(category: Category | undefined) {
-    this.#category = category;
+  constructor(private httpService: HttpService) {}
+
+  public sendMessage(message: Message): void {
+    this.httpService.post(ApiPaths.PostMessage, message).subscribe({
+      next: (response) => {
+        this.updateMessages();
+        this.sentMessage = message;
+      },
+      error: (error) => console.error(error),
+    });
+  }
+
+  public updateMessages(): void {
+    this.httpService
+      .get(ApiPaths.GetMessagesByCategory + this.category.id)
+      .subscribe({
+        next: (response) => (this.messages = response as Message[]),
+        error: (error) => console.error(error),
+      });
+  }
+
+  public selectedCategory(category: Category) {
+    this.category = category;
     this.updateMessages();
   }
 
-  get category() {
-    return this.#category;
-  }
-
-  public ngOnInit(): void {}
-
-  private updateMessages(): void {
-    this.messages = [];
-  }
-
-  private sendMessage(message: Message): void {
-    this.messages = [];
+  public createdCategory(category: Category) {
+    this.updateMessages();
   }
 }
